@@ -60,8 +60,3 @@ select num from a where exists(select 1 from b where num=a.num)
 29、尽量避免向客户端返回大数据量，若数据量过大，应该考虑相应需求是否合理。
 30、尽量避免大事务操作，提高系统并发能力。
 
-
-作者：Coding_ff
-链接：http://www.jianshu.com/p/25c958196a0b
-來源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
