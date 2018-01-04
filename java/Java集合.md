@@ -82,4 +82,54 @@
         ……
     }
 ```
+我们目前还是只着重核心的部分，Entry 是一个 static class，其中包含了 key 和 value，也就是键值对，另外还包含了一个 next 的 Entry 指针。我们可以总结出：Entry 就是数组中的元素，每个 Entry 其实就是一个 key-value 对，它持有一个指向下一个元素的引用，这就构成了链表。
 
+####HashMap 的核心方法解读
+```java
+    public V put(K key, V value) {
+            //其允许存放null的key和null的value，当其key为null时，调用putForNullKey方法，放入到table[0]的这个位置
+            if (key == null)
+                return putForNullKey(value);
+            //通过调用hash方法对key进行哈希，得到哈希之后的数值。该方法实现可以通过看源码，其目的是为了尽可能的让键值对可以分不到不同的桶中
+            int hash = hash(key);
+            //根据上一步骤中求出的hash得到在数组中是索引i
+            int i = indexFor(hash, table.length);
+            //如果i处的Entry不为null，则通过其next指针不断遍历e元素的下一个元素。
+            for (Entry<K,V> e = table[i]; e != null; e = e.next) {
+                Object k;
+                if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+                    V oldValue = e.value;
+                    e.value = value;
+                    e.recordAccess(this);
+                    return oldValue;
+                }
+            }
+    
+            modCount++;
+            addEntry(hash, key, value, i);
+            return null;
+    }
+```
+从上面的源代码中可以看出：当我们往 HashMap 中 put 元素的时候，先根据 key 的 hashCode 重新计算 hash 值，根据 hash 值得到这个元素在数组中的位置（即下标），如果数组该位置上已经存放有其他元素了，那么在这个位置上的元素将以链表的形式存放，新加入的放在链头，最先加入的放在链尾。如果数组该位置上没有元素，就直接将该元素放到此数组中的该位置上。
+```java
+    addEntry(hash, key, value, i)方法根据计算出的 hash 值，将 key-value 对放在数组 table 的 i 索引处。addEntry 是 HashMap 提供的一个包访问权限的方法，代码如下：
+    void addEntry(int hash, K key, V value, int bucketIndex) {
+            if ((size >= threshold) && (null != table[bucketIndex])) {
+                resize(2 * table.length);
+                hash = (null != key) ? hash(key) : 0;
+                bucketIndex = indexFor(hash, table.length);
+            }
+    
+            createEntry(hash, key, value, bucketIndex);
+    }
+    void createEntry(int hash, K key, V value, int bucketIndex) {
+            // 获取指定 bucketIndex 索引处的 Entry
+            Entry<K,V> e = table[bucketIndex];
+            // 将新创建的 Entry 放入 bucketIndex 索引处，并让新的 Entry 指向原来的 Entr
+            table[bucketIndex] = new Entry<>(hash, key, value, e);
+            size++;
+    }
+```
+当系统决定存储 HashMap 中的 key-value 对时，完全没有考虑 Entry 中的 value，仅仅只是根据 key 来计算并决定每个 Entry 的存储位置。我们完全可以把 Map 集合中的 value 当成 key 的附属，当系统决定了 key 的存储位置之后，value 随之保存在那里即可。
+
+#####https://www.jianshu.com/p/2e9065f8937f?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
