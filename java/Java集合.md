@@ -43,3 +43,43 @@
 
 ####HashMap 的数据结构
     在 Java 编程语言中，最基本的结构就是两种，一个是数组，另外一个是指针（引用），HashMap 就是通过这两个数据结构进行实现。HashMap实际上是一个“链表散列”的数据结构，即数组和链表的结合体。
+    HashMap 底层就是一个数组结构，数组中的每一项又是一个链表。
+    
+####HashMap 源码进行一些学习，首先看一下构造函数：
+```java
+
+    public HashMap(int initialCapacity, float loadFactor) {
+            if (initialCapacity < 0)
+                throw new IllegalArgumentException("Illegal initial capacity: " +
+                                                   initialCapacity);
+            if (initialCapacity > MAXIMUM_CAPACITY)
+                initialCapacity = MAXIMUM_CAPACITY;
+            if (loadFactor <= 0 || Float.isNaN(loadFactor))
+                throw new IllegalArgumentException("Illegal load factor: " +
+                                                   loadFactor);
+    
+            // Find a power of 2 >= initialCapacity
+            int capacity = 1;
+            while (capacity < initialCapacity)
+                capacity <<= 1;
+    
+            this.loadFactor = loadFactor;
+            threshold = (int)Math.min(capacity * loadFactor, MAXIMUM_CAPACITY + 1);
+            table = new Entry[capacity];
+            useAltHashing = sun.misc.VM.isBooted() &&
+                    (capacity >= Holder.ALTERNATIVE_HASHING_THRESHOLD);
+            init();
+    }
+
+```
+我们着重看一下第 18 行代码table = new Entry[capacity];。这不就是 Java 中数组的创建方式吗？也就是说在构造函数中，其创建了一个 Entry 的数组，其大小为 capacity（目前我们还不需要太了解该变量含义），那么 Entry 又是什么结构呢？看一下源码：
+```java
+    static class Entry<K,V> implements Map.Entry<K,V> {
+        final K key;
+        V value;
+        Entry<K,V> next;
+        final int hash;
+        ……
+    }
+```
+
