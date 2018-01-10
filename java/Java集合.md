@@ -1,8 +1,8 @@
-### List、Set和Map的区别：
+## List、Set和Map的区别：
     前两者与Map的区别显而易见，前两者属于单个元素级别的存储，而Map是键值对的存储方式。那么List和Set的区别呢？在不分析源码的情况下，可以先理解为List采用线性结构存储，元素可以为null。Set采用离散存储方式，不允许存储值为null的元素且存储的元素不能重复。
-### Collection和Collections的区别：
+## Collection和Collections的区别：
     Collection是集合类List和Set的父接口，规定了集合的通用方法，不同子类的具体实现略有不同。Collections是集合工具类，提供了一系列static方法辅助操作，常用的有排序sort()、转化为线程安全的synchronizedXXX()等。
-### ArrayList
+## ArrayList
     1.arraylist不是线程安全的，只能用在单线程环境下
     2.arraylist支持序列化和克隆
     3.arraylist只有两个私有属性，如下，由此可以看出arraylist的底层实现是数组
@@ -11,7 +11,7 @@
     6.在arraylist中间插入一组数据时，在检查容量和扩容之后，会将原本从插入位置index位置到最后的数据都拷贝到新扩容的空间，然后再把要插入的数据插入到原来数据腾出的位置
     7.在arraylist中删除数据时，会把后面的数据往前复制，保证中间没有无效的数据，然后对原本往前挪的位置设置为null
 
-### HashMap和Hashtable的区别：
+## HashMap和Hashtable的区别：
     HashMap允许使用null作为key或者value
     HashMap不是线程安全的
 
@@ -29,7 +29,7 @@
 ```
     通过源码可以很明显看到其put方法使用synchronized关键字，在线程中这是实现线程安全的一种方式，所以Hashtable是线程安全的。
 
-### ConcurrentHashMap的底层实现
+## ConcurrentHashMap的底层实现
     ConcurrentHashMap使用了线程锁分段技术，每次访问只允许一个线程修改哈希表的映射关系，所以是线程安全的
     ConcurrentHashMap 的成员变量中，包含了一个 Segment 的数组（final Segment<K,V>[] segments;），而 Segment 是 ConcurrentHashMap 的内部类，然后在 Segment 这个类中，包含了一个 HashEntry 的数组（transient volatile HashEntry<K,V>[] table;）。
     而 HashEntry 也是 ConcurrentHashMap 的内部类。HashEntry 中，包含了 key 和 value 以及 next 指针（类似于 HashMap 中 Entry），所以 HashEntry 可以构成一个链表。
@@ -37,9 +37,9 @@
     所以通俗的讲，ConcurrentHashMap 数据结构为一个 Segment 数组，Segment 的数据结构为 HashEntry 的数组，而 HashEntry 存的是我们的键值对，可以构成链表。
 #####http://wiki.jikexueyuan.com/project/java-collection/concurrenthashmap.html
     
-### HashMap 的实现原理
+## HashMap 的实现原理
 
-#### HashMap 概述
+### HashMap 概述
     HashMap 是基于哈希表的 Map 接口的非同步实现。此实现提供所有可选的映射操作，并允许使用 null 值和 null 键。此类不保证映射的顺序，特别是它不保证该顺序恒久不变。
 
     此实现假定哈希函数将元素适当地分布在各桶之间，可为基本操作（get 和 put）提供稳定的性能。迭代 collection 视图所需的时间与 HashMap 实例的“容量”（桶的数量）及其大小（键-值映射关系数）成比例。
@@ -47,11 +47,11 @@
 
     需要注意的是：Hashmap 不是同步的，如果多个线程同时访问一个 HashMap，而其中至少一个线程从结构上（指添加或者删除一个或多个映射关系的任何操作）修改了，则必须保持外部同步，以防止对映射进行意外的非同步访问。
 
-#### HashMap 的数据结构
+### HashMap 的数据结构
     在 Java 编程语言中，最基本的结构就是两种，一个是数组，另外一个是指针（引用），HashMap 就是通过这两个数据结构进行实现。HashMap实际上是一个“链表散列”的数据结构，即数组和链表的结合体。
     HashMap 底层就是一个数组结构，数组中的每一项又是一个链表。
     
-#### HashMap 源码进行一些学习，首先看一下构造函数：
+### HashMap 源码进行一些学习，首先看一下构造函数：
 ```java
 
     public HashMap(int initialCapacity, float loadFactor) {
@@ -92,8 +92,8 @@
     我们目前还是只着重核心的部分，Entry 是一个 static class，其中包含了 key 和 value，也就是键值对，另外还包含了一个 next 的 Entry 指针。
     我们可以总结出：Entry 就是数组中的元素，每个 Entry 其实就是一个 key-value 对，它持有一个指向下一个元素的引用，这就构成了链表。
 
-#### HashMap 的核心方法解读
-#### 存储
+### HashMap 的核心方法解读
+### 存储
 ```java
     public V put(K key, V value) {
             //其允许存放null的key和null的value，当其key为null时，调用putForNullKey方法，放入到table[0]的这个位置
@@ -162,7 +162,7 @@
     }
 
 ```
-#### 读取
+### 读取
 ```java
     public V get(Object key) {
             if (key == null)
