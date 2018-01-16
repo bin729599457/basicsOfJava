@@ -25,6 +25,8 @@
     面向对象编程(OOP) 语言的一个主要功能就是“继承”。 ...
     要实现继承，可以通过“继承”（Inheritance）和“组合”（Composition）来实现。
 ### 06.装箱和拆箱
+    自动装箱就是Java自动将原始类型值转换成对应的对象，比如将int的变量转换成Integer对象，这个过程叫做装箱，反之将Integer对象转换成int类型值，这个过程叫做拆箱。
+    因为这里的装箱和拆箱是自动进行的非人为转换，所以就称作为自动装箱和拆箱。原始类型byte,short,char,int,long,float,double和boolean对应的封装类为Byte,Short,Character,Integer,Long,Float,Double,Boolean。
 ### 07.==和equals的区别
 ### 08.String
 ### 09.讲一下java中的集合
