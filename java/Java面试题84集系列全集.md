@@ -28,6 +28,11 @@
     自动装箱就是Java自动将原始类型值转换成对应的对象，比如将int的变量转换成Integer对象，这个过程叫做装箱，反之将Integer对象转换成int类型值，这个过程叫做拆箱。
     因为这里的装箱和拆箱是自动进行的非人为转换，所以就称作为自动装箱和拆箱。原始类型byte,short,char,int,long,float,double和boolean对应的封装类为Byte,Short,Character,Integer,Long,Float,Double,Boolean。
 ### 07.==和equals的区别
+    基本数据类型，也称原始数据类型。byte,short,char,int,long,float,double,boolean 
+    他们之间的比较，应用双等号（==）,比较的是他们的值。
+    当他们用（==）进行比较的时候，比较的是他们在内存中的存放地址，所以，除非是同一个new出来的对象，他们的比较后的结果为true，否则比较后结果为false。 
+    JAVA当中所有的类都是继承于Object这个基类的，在Object中的基类中定义了一个equals的方法，这个方法的初始行为是比较对象的内存地 址，但在一些类库当中这个方法被覆盖掉了，如String,Integer,Date在这些类当中equals有其自身的实现，而不再是比较类在堆内存中的存放地址了。
+    对于复合数据类型之间进行equals比较，在没有覆写equals方法的情况下，他们之间的比较还是基于他们在内存中的存放位置的地址值的，因为Object的equals方法也是用双等号（==）进行比较的，所以比较后的结果跟双等号（==）的结果相同。
 ### 08.String
 ### 09.讲一下java中的集合
 ### 10.ArrayList 和LinkedList的区别
@@ -41,3 +46,51 @@
 ### 18.Servlet的生命周期
 ### 19.Servlet中forward和redirect的区别
 ### 20.jsp和Servlet的相同点和不同点
+### 21.内置对象和四大作用域和页面传值
+### 22.Session和Cookie的区别和使用场景
+### 23.mvc模式和mvc各部分的实现
+### 24.数据库分类和常用数据库
+### 25.关系型数据库的三范式
+### 26.事务的四大特征
+### 27.mysql数据库最大连接数
+### 28.mysql和oracle的分页语句
+### 29.触发器的使用场景？
+### 30.存储过程的优点
+### 31.jdbc调用存储过程
+### 32.简单说一下你对jdbc的理解
+### 33.写一个jdbc的访问oracle的列子
+### 34.jdbc中preparedStatement比Statement的好处
+### 35.数据库连接池的作用
+
+### 46.简单介绍一下MVC模式
+### 47.简单说一下对mvc框架的理解
+### 48.struts2的执行流程或者struts2的原理
+### 49.Struts2的拦截器是什么
+### 50.Spring MVC的执行流程
+### 51.SpringMVC和Struts2的不同
+### 52.简单介绍一下Spring或者Spring的两大核心
+### 53.AOP是什么？都用它做什么？
+### 54.Spring事务的传播特性和隔离级别
+### 55.ORM是什么？ORM框架是什么？
+### 56.ibatis和hibernate有什么不同
+### 57.hibernate对象状态及其转换
+### 58：hibernate的缓存
+### 59.webservice的使用场景
+### 60.activiti的简单介绍
+### 61.linux的使用场景
+### 62.linux常用命令
+### 65：数据库优化方面的事情
+### 66：如果查询和定位慢查询
+### 67：数据库优化之数据库表设计遵循范式
+### 68：选择合适的数据库引擎
+### 69：选择合适的索引
+### 70：使用索引的一些技巧1
+### 71：数据库优化之分表
+### 72：数据库的读写分离
+### 73：数据库优化之缓存
+### 74：sql语句优化小技巧
+### 75：批量插入几百万条数据
+### 77：redis的使用场景
+### 78：redis存储对象的方式
+### 79：redis数据淘汰机制
+### 80：java访问redis级redis集群
