@@ -9,6 +9,7 @@
     所以，运行Java程序必须有JVM的支持，因为编译的结果不是机器码，必须要经过JVM的再次翻译才能执行。即使你将Java程序打包成可执行文件（例如 .exe），仍然需要JVM的支持。注意：跨平台的是Java程序，不是JVM。
     JVM是用C/C++开发的，是编译后的机器码，不能跨平台，不同平台下需要安装不同版本的JVM。
 ### 04.java中int占几个字节
+
     类型      存储需求     bit数    取值范围      备注
     int        4字节       4*8 
     short      2字节       2*8   －32768～32767
@@ -17,7 +18,7 @@
     float      4字节       4*8             float类型的数值有一个后缀F(例如：3.14F)
     double     8字节       8*8             没有后缀F的浮点数值(如3.14)默认为double类型
     char       2字节       2*8
-    boolean    1字节       1*8      false、true
+    boolean    1字节       1*8    false、true
     
 ### 05.java面向对象的特征
     面向对象的三个基本特征是：封装、继承、多态。
@@ -33,7 +34,46 @@
     当他们用（==）进行比较的时候，比较的是他们在内存中的存放地址，所以，除非是同一个new出来的对象，他们的比较后的结果为true，否则比较后结果为false。 
     JAVA当中所有的类都是继承于Object这个基类的，在Object中的基类中定义了一个equals的方法，这个方法的初始行为是比较对象的内存地 址，但在一些类库当中这个方法被覆盖掉了，如String,Integer,Date在这些类当中equals有其自身的实现，而不再是比较类在堆内存中的存放地址了。
     对于复合数据类型之间进行equals比较，在没有覆写equals方法的情况下，他们之间的比较还是基于他们在内存中的存放位置的地址值的，因为Object的equals方法也是用双等号（==）进行比较的，所以比较后的结果跟双等号（==）的结果相同。
-### 08.String
+    我们可以改写equals()方法, 根据需要来比较两个对象.
+    equals默认情况下 和 "=="都是比较对象的内存地址, 而非hashCode().
+    hashCode只是与内存地址有关.
+    相同的对象（相同的hashcode和内存地址）,反之相同的hashcode不一定是相同的对象.
+### 08.java中String、StringBuffer、StringBuilder的区别
+- 1.可变与不可变
+　　String类中使用字符数组保存字符串，如下就是，因为有“final”修饰符，所以可以知道string对象是不可变的。
+```java
+private final char value[];
+```
+　　StringBuilder与StringBuffer都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串，如下就是，可知这两种对象都是可变的。
+```java
+char[] value;
+```
+
+- 2.是否多线程安全
+　　String中的对象是不可变的，也就可以理解为常量，显然线程安全。
+　　AbstractStringBuilder是StringBuilder与StringBuffer的公共父类，定义了一些字符串的基本操作，如expandCapacity、append、insert、indexOf等公共方法。
+　　StringBuilder并没有对方法进行加同步锁，所以是非线程安全的。　
+    　StringBuffer对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的看如下源码：
+
+```java
+public synchronized StringBuffer reverse() {
+    super.reverse();
+    return this;
+}
+
+public int indexOf(String str) {
+    return indexOf(str, 0);        
+//存在 public synchronized int indexOf(String str, int fromIndex) 方法
+}
+```
+
+- 3.StringBuilder与StringBuffer共同点
+
+        StringBuilder与StringBuffer有公共父类AbstractStringBuilder(抽象类)。
+        抽象类与接口的其中一个区别是：抽象类中可以定义一些子类的公共方法，子类只需要增加新的功能，不需要重复写已经存在的方法；而接口中只是对方法的申明和常量的定义。
+
+        StringBuilder、StringBuffer的方法都会调用AbstractStringBuilder中的公共方法，如super.append(...)。只是StringBuffer会在方法上加synchronized关键字，进行同步。
+
 ### 09.讲一下java中的集合
 ### 10.ArrayList 和LinkedList的区别
 ### 11.HashMap和HashTable的区别
