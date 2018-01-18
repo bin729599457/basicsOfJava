@@ -143,13 +143,18 @@ public int indexOf(String str) {
 ### 12.实现一个拷贝文件的工具类要使用字节流还是字符串
     拷贝的文件具有不确定性，可能有字节流（图片、声音等）或字符流，为考虑通用性要使用字节流
 ### 13.线程的的实现方式？怎么启动线程？怎么区分线程？
-    1、继承Thread类 
+    1、继承Thread类      
     2、实现Runnable接口
+    区分:可以Set线程名，或获得线程Id
 ### 14.线程并发库和线程池的作用
 ### 15.设计模式和常用的设计模式
 ### 16.http get post请求的区别
 ### 17.说说你对Servlet的理解
 ### 18.Servlet的生命周期
+    Servlet 通过调用 init () 方法进行初始化。
+    Servlet 调用 service() 方法来处理客户端的请求。
+    Servlet 通过调用 destroy() 方法终止（结束）。
+    最后，Servlet 是由 JVM 的垃圾回收器进行垃圾回收的。
 ### 19.Servlet中forward和redirect的区别
 ### 20.jsp和Servlet的相同点和不同点
 ### 21.内置对象和四大作用域和页面传值
