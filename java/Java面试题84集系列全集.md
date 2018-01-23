@@ -206,8 +206,6 @@ public int indexOf(String str) {
 
 ### 16.http get post请求的区别
 
-### 17.说说你对Servlet的理解
-
 ### 18.Servlet的生命周期
     Servlet 通过调用 init () 方法进行初始化。
     Servlet 调用 service() 方法来处理客户端的请求。
