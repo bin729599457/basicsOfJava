@@ -311,6 +311,11 @@ public int indexOf(String str) {
 ### 32.简单说一下你对jdbc的理解
 ### 33.写一个jdbc的访问oracle的列子
 ### 34.jdbc中preparedStatement比Statement的好处
+    PreparedStatement 是预编译 ，使用Statement时 sql 中要进行很多的单引号拼接字符串，首先是容易出错也比较麻烦，还有就是存在sql 注入问题这是从安全方面说的。 PreparedStatement  传参数时候用 了占位符 “？”很好的解决了以上Statement的问题。我所体会到得的就是这些。 
+    
+    PreparedStatement是在执行前先输入sql语句，Statement正好相反，是在执行的时候传入sql语句的。
+    这样的区别在于，PreparedStatement可以在传入sql后，执行语句前，给参数赋值，避免了因普通的拼接sql字符串语句所带来的安全问题，而且准备sql和执行sql是在两个语句里面完成的，也提高了语句执行的效率。
+    Statement，就没有以前所说的功能了，我一般很少用 
 ### 35.数据库连接池的作用
 
 ### 46.简单介绍一下MVC模式
