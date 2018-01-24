@@ -263,6 +263,23 @@ public int indexOf(String str) {
 ### 27.mysql数据库最大连接数
 
 ### 28.mysql和oracle的分页语句
+    MySQL
+    
+    MYSQL中有特定的分页查询语句，该sql语句只能在MySQL中使用
+    
+    select * from t_customer limit ?,?
+    
+    该sql语句的意思是，从第几行开始，然后取多少行，MySQL中第一行的下标是0
+    
+    例如：我要取数据库中的前10行数据，我的sql语句应该这样写：select  *  from  t_customer  limit 0,9;
+    
+    Oracle
+    
+    select * from(select rownum id, t_customer.* from t_customer where rownum <= ? )where id >= ?;
+    
+    例如：查询第20行到第30行的数据
+    
+    select * from(select rownum id, t_customer.* from t_customer where rownum <= 30 )where id >= 20；
 
 ### 29.触发器的使用场景？
 
