@@ -334,6 +334,12 @@ public int indexOf(String str) {
 ### 50.Spring MVC的执行流程
 ### 51.SpringMVC和Struts2的不同
 ### 52.简单介绍一下Spring或者Spring的两大核心
+    IoC Inverse of Control 反转控制的概念，就是将原本在程序中手动创建UserService对象的控制权，交由Spring框架管理，简单说，就是创建UserService对象控制权被反转到了Spring框架
+    
+    DI：Dependency Injection 依赖注入，在Spring框架负责创建Bean对象时，动态的将依赖对象注入到Bean组件
+    IoC 控制反转，指将对象的创建权，反转到Spring容器 ， DI 依赖注入，指Spring创建对象的过程中，将对象依赖属性通过配置进行注入
+    
+
 ### 53.AOP是什么？都用它做什么？
 ### 54.Spring事务的传播特性和隔离级别
 ### 55.ORM是什么？ORM框架是什么？
