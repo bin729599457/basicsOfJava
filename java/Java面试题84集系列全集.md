@@ -372,6 +372,72 @@ public int indexOf(String str) {
 ### 72：数据库的读写分离
 ### 73：数据库优化之缓存
 ### 74：sql语句优化小技巧
+    除了建立索引之外，保持良好的SQL语句编写习惯将会降低SQL性能问题发生。
+    ①通过变量的方式来设置参数
+    好：
+    stringsql = "select * from people p where p.id = ? ";
+    坏：
+    stringsql = "select * from people p where p.id = "+id;
+    数据库的SQL文解析和执行计划会保存在缓存中，但是SQL文只要有变化，就得重新解析。
+    “…where p.id = ”+id的方式在id值发生改变时需要重新解析，这会耗费时间。
+    ②不要使用select *
+    好：
+    stringsql = "select people_name,pepole_age from people ";
+    坏：
+    stringsql = "select * from people ";
+    使用select *的话会增加解析的时间，另外会把不需要的数据也给查询出来，数据传输也是耗费时间的，
+    比如text类型的字段通常用来保存一些内容比较繁杂的东西，如果使用select *则会把该字段也查询出来。
+    ③谨慎使用模糊查询
+    好：
+    stringsql = "select * from people p where p.id like 'parm1%' ";
+    坏：
+    stringsql = "select * from people p where p.id like '%parm1%' ";
+    当模糊匹配以%开头时，该列索引将失效，若不以%开头，该列索引有效。
+    模糊查询可使用instr()函数
+    ④不要使用列号
+    好：
+    stringsql = "select people_name,pepole_age from people order by name,age";
+    坏：
+    stringsql = "select people_name,pepole_age from people order by 6,8";
+    使用列号的话，将会增加不必要的解析时间。
+    ⑤优先使用UNION ALL，避免使用UNION
+    好：
+    stringsql = "select name from student union all select name from teacher";
+    坏：
+    stringsql = "select name from student union select name from teacher";
+    UNION 因为会将各查询子集的记录做比较，故比起UNION ALL ，通常速度都会慢上许多。一般来说，如果使用UNION ALL能满足要求的话，务必使用UNION ALL。还有一种情况，如果业务上能够确保不会出现重复记录。
+    ⑥在where语句或者order by语句中避免对索引字段进行计算操作
+    好：
+    stringsql = "select people_name,pepole_age from people where create_date=date1 ";
+    坏：
+    stringsql = "select people_name,pepole_age from people where trunc(create_date)=date1";
+    当在索引列上进行操作之后，索引将会失效。正确做法应该是将值计算好再传入进来。
+    ⑦使用not exist代替not in
+    好：
+    stringsql = "select * from orders where customer_name not exist (select customer_name from customer)";
+    坏：
+    stringsql = "select * from orders where customer_name not in(select customer_name from customer)";
+    如果查询语句使用了not in 那么内外表都进行全表扫描，没有用到索引；而not extsts 的子查询依然能用到表上的索引。
+    ⑧ exist和in的区别
+    in 是把外表和内表作hash 连接，而exists是对外表作loop循环，每次loop循环再对内表进行查询。因此，in用到的是外表的索引， exists用到的是内表的索引。
+    如果查询的两个表大小相当，那么用in和exists差别不大。
+    如果两个表中一个较小，一个是大表，则子查询表大的用exists，子查询表小的用in：
+    例如：表A（小表），表B（大表）
+    select * from A where cc in (select cc from B)
+    效率低，用到了A表上cc列的索引；
+    select * from A where exists(select cc from B where cc=A.cc)
+    效率高，用到了B表上cc列的索引。
+    select * from B where cc in (select cc from A)
+    效率高，用到了B表上cc列的索引；
+    select * from B where exists(select cc from A where cc=B.cc)
+    效率低，用到了A表上cc列的索引。
+    ⑨避免在索引列上做如下操作：
+    ◆避免在索引字段上使用<>，!=
+    ◆避免在索引列上使用IS NULL和IS NOT NULL
+    ◆避免在索引列上出现数据类型转换（比如某字段是String类型，参数传入时是int类型）
+    当在索引列上使用如上操作时，索引将会失效，造成全表扫描。
+    ⑩复杂操作可以考虑适当拆成几步
+    有时候会有通过一个SQL语句来实现复杂业务的例子出现，为了实现复杂的业务，嵌套多级子查询。造成SQL性能问题。对于这种情况可以考虑拆分SQL，通过多个SQL语句实现，或者把部分程序能完成的工作交给程序完成。
 ### 75：批量插入几百万条数据
 ### 77：redis的使用场景
 ### 78：redis存储对象的方式
