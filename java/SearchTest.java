@@ -1,4 +1,3 @@
-package com.westore.utils;
 
 public class SearchTest {
 
