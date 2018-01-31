@@ -139,4 +139,20 @@ public class MyLink {
         this.head = pReversedHead;
         return this.head;
     }
+
+    /**
+     * 查找单链表的中间节点
+     *  采用快慢指针的方式查找单链表的中间节点，快指针一次走两步，慢指针一次走一步，当快指针走完时，慢指针刚好到达中间节点。
+     * @param head
+     * @return
+     */
+    public Node SearchMid(Node head) {
+        Node p = this.head, q = this.head;
+        while (p != null && p.next != null && p.next.next != null) {
+            p = p.next.next;
+            q = q.next;
+        }
+        System.out.println("Mid:" + q.data);
+        return q;
+    }
 }
