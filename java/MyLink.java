@@ -177,4 +177,28 @@ public class MyLink {
         }
         return p2;
     }
+
+    /**
+     * 排序
+     *
+     * @return
+     */
+    public Node orderList() {
+        Node nextNode = null;
+        int tmp = 0;
+        Node curNode = head;
+        while (curNode.next != null) {
+            nextNode = curNode.next;
+            while (nextNode != null) {
+                if (curNode.data > nextNode.data) {
+                    tmp = curNode.data;
+                    curNode.data = nextNode.data;
+                    nextNode.data = tmp;
+                }
+                nextNode = nextNode.next;
+            }
+            curNode = curNode.next;
+        }
+        return head;
+    }
 }
