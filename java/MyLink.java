@@ -201,4 +201,23 @@ public class MyLink {
         }
         return head;
     }
+
+
+    /**
+     * 删除重复节点
+     */
+    public void deleteDuplecate(Node head) {
+        Node p = head;
+        while (p != null) {
+            Node q = p;
+            while (q.next != null) {
+                if (p.data == q.next.data) {
+                    q.next = q.next.next;
+                } else
+                    q = q.next;
+            }
+            p = p.next;
+        }
+
+    }
 }
