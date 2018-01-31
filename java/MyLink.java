@@ -220,4 +220,16 @@ public class MyLink {
         }
 
     }
+
+    /**
+     * 从尾到头输出单链表，采用递归方式实现
+     *
+     * @param pListHead
+     */
+    public void printListReversely(Node pListHead) {
+        if (pListHead != null) {
+            printListReversely(pListHead.next);
+            System.out.println("printListReversely:" + pListHead.data);
+        }
+    }
 }
