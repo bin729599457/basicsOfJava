@@ -116,4 +116,27 @@ public class MyLink {
         System.out.println("After deleteNode(4):");
         list.printList();
     }
+
+    /**
+     * 链表反转
+     *
+     * @param head
+     * @return
+     */
+    public Node ReverseIteratively(Node head) {
+        Node pReversedHead = head;
+        Node pNode = head;
+        Node pPrev = null;
+        while (pNode != null) {
+            Node pNext = pNode.next;
+            if (pNext == null) {
+                pReversedHead = pNode;
+            }
+            pNode.next = pPrev;
+            pPrev = pNode;
+            pNode = pNext;
+        }
+        this.head = pReversedHead;
+        return this.head;
+    }
 }
