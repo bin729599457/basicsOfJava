@@ -19,6 +19,13 @@ public class MyLink {
     /**
      * 向链表中插入数据
      *
+     *  添加节点的方法很明显违反了单链表先进后出的原则
+
+         public void addNode(int d){
+         Node newNode = new Node(d);
+         newNode.next = head;
+         head = newNode;
+         }
      * @param d
      */
     public void addNode(int d) {
@@ -231,5 +238,52 @@ public class MyLink {
             printListReversely(pListHead.next);
             System.out.println("printListReversely:" + pListHead.data);
         }
+    }
+
+
+    /**
+     * 判断链表是否有环，单向链表有环时，尾节点相同
+     *
+     * @param head
+     * @return
+     */
+    public boolean IsLoop(Node head) {
+        Node fast = head, slow = head;
+        if (fast == null) {
+            return false;
+        }
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                System.out.println("该链表有环");
+                return true;
+            }
+        }
+        return !(fast == null || fast.next == null);
+    }
+
+    /**
+     * 找出链表环的入口
+     *
+     * @param head
+     * @return
+     */
+    public Node FindLoopPort(Node head) {
+        Node fast = head, slow = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast)
+                break;
+        }
+        if (fast == null || fast.next == null)
+            return null;
+        slow = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
     }
 }
