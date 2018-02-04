@@ -382,6 +382,7 @@ public int indexOf(String str) {
 ### 60.activiti的简单介绍
 ### 61.linux的使用场景
 ### 62.linux常用命令
+    https://gywbd.github.io/posts/2014/8/50-linux-commands.html
 ### 65：数据库优化方面的事情
 ### 66：如果查询和定位慢查询
 ### 67：数据库优化之数据库表设计遵循范式
