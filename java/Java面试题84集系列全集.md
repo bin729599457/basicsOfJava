@@ -249,7 +249,10 @@ public int indexOf(String str) {
     
     对于客户端而言，它只知道自己最早请求的那个A，而不知道中间的B，甚至C、D。 传输的信息不会丢失。
 ### 20.jsp和Servlet的相同点和不同点
-
+    JSP 是 Servlet 技术的扩展，本质上是 Servlet 的简易方式，更强调应用的外表表达。 JSP
+    编译后是"类 servlet"。 Servlet 和 JSP 最主要的不同点在于， Servlet 的应用逻辑是在 Java
+    文件中，并且完全从表示层中的 HTML 里分离开来。而 JSP 的情况是 Java 和 HTML 可以
+    组合成一个扩展名为.jsp 的文件。 JSP 侧重于视图， Servlet 主要用于控制逻辑。 
 ### 21.内置对象和四大作用域和页面传值
 
 ### 22.Session和Cookie的区别和使用场景
