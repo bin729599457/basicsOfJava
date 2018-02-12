@@ -206,63 +206,32 @@ public int indexOf(String str) {
 
 ### 16.http get post请求的区别
     Get和Post是两种Http请求方式：
-    
     1) Get:从服务器请求数据，而且请求包含在Url之中，如：
-    
     /test/demo_form.asp?name1=value1&name2=value2
-    
     有长度限制；可以用来作电子书签；敏感数据不应该用Get请求；可以缓存；保存在浏览器历史记录之中；仅仅用来检索数据
-    
     2) Post:提交数据到服务器，如：
-    
     POST /test/demo_form.asp HTTP/1.1
-    
     Host: w3schools.com
-    
     name1=value1&name2=value2
-    
     不可以缓存；不存在浏览历史记录当中；没有长度限制；不可用作电子书签；POST请求相对GET请求更加安全；
-    
     GET被强制服务器支持
-    
     All general-purpose servers MUST support the methods GET and HEAD. All other methods are OPTIONAL.
-    
     GET 通常用于请求服务器发送某个资源。在HTTP/1.1中，要求服务器实现此方法；POST请求方法起初是用来向服务器输入数据的。在HTTP/1.1中，POST方法是可选被实现的，没有明确规定要求服务器实现。
-    
     浏览器对URL的长度有限制，所以GET请求不能代替POST请求发送大量数据
-    
     RFC 2616 (Hypertext Transfer Protocol — HTTP/1.1) states in section 3.2.1 that there is no limit to the length of an URI (URI is the official term for what most people call a URL)
-    
     RFC 2616 中明确对 uri 的长度并没有限制。不过虽然在RFC中并没有对uri的长度进行限制，但是各大浏览器厂家在实现的时候限制了URL的长度，可查到的是IE对长度限制为2083；而chrome遇到长度很长的URL时，会直接崩溃。
-    
     所以这条结论算是正确的。
-    
     GET请求发送数据更小
-    
     只能通过写代码验证了：下面第一个文件是服务器代码，作用是在客户端发送GET和POST请求的时候返回200状态码。第二个文件是客户端HTML文件，点击两个button，分别发送GET请求和POST请求。
-    
     GET请求是幂等的
-    
     A request method is considered "idempotent" if the intended effect on the server of multiple identical requests with that method is the same as the effect for a single such request. Of the request methods defined by this specification, PUT, DELETE, and safe request methods are idempotent.
-    
     从上面可以看到GET请求是安全的，在幂等性中说PUT和DELETE以及安全method都是幂等的，所以GET自然也被包括了。
-    
     其他的请求方式：
-    
     HEAD：Same as GET but returns only HTTP headers and no document body
-    
     PUT： Uploads a representation of the specified URI
-    
     DELETE： Deletes the specified resource
-    
     OPTIONS： Returns the HTTP methods that the server supports
-    
     CONNECT： Converts the request connection to a transparent TCP/IP tunnel
-    
-    作者：雅然风懿
-    链接：https://www.jianshu.com/p/63158ec1f1f9
-    來源：简书
-    著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 ### 18.Servlet的生命周期
     Servlet 通过调用 init () 方法进行初始化。
