@@ -57,11 +57,11 @@
 - 1.可变与不可变
 　　String类中使用字符数组保存字符串，如下就是，因为有“final”修饰符，所以可以知道string对象是不可变的。
 ```java
-private final char value[];
+    private final char value[];
 ```
 　　StringBuilder与StringBuffer都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串，如下就是，可知这两种对象都是可变的。
 ```java
-char[] value;
+    char[] value;
 ```
 
 - 2.是否多线程安全
@@ -71,15 +71,15 @@ char[] value;
     　StringBuffer对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的看如下源码：
 
 ```java
-public synchronized StringBuffer reverse() {
-    super.reverse();
-    return this;
-}
+    public synchronized StringBuffer reverse() {
+       super.reverse();
+        return this;
+    }
 
-public int indexOf(String str) {
-    return indexOf(str, 0);        
+    public int indexOf(String str) {
+        return indexOf(str, 0);        
 //存在 public synchronized int indexOf(String str, int fromIndex) 方法
-}
+    }
 ```
 
 - 3.StringBuilder与StringBuffer共同点
