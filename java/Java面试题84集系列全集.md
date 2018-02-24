@@ -377,7 +377,7 @@
     select * from(select rownum id, t_customer.* from t_customer where rownum <= 30 )where id >= 20；
 
 ### 29.触发器的使用场景？
-
+    https://www.jianshu.com/p/9e293018a536
 ### 30.存储过程的优点
     存储过程是一组予编译的SQL语句
         它的优点：1.允许模块化程序设计，就是说只需要创建一次过程，以后在程序中就可以调用该过程任意次。
