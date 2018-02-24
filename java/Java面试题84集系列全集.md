@@ -437,7 +437,8 @@
         }
     }
 ### 34.jdbc中preparedStatement比Statement的好处
-    PreparedStatement 是预编译 ，使用Statement时 sql 中要进行很多的单引号拼接字符串，首先是容易出错也比较麻烦，还有就是存在sql 注入问题这是从安全方面说的。 PreparedStatement  传参数时候用 了占位符 “？”很好的解决了以上Statement的问题。我所体会到得的就是这些。 
+    PreparedStatement 是预编译 ，使用Statement时 sql 中要进行很多的单引号拼接字符串，首先是容易出错也比较麻烦，还有就是存在sql 注入问题这是从安全方面说的。 
+    PreparedStatement  传参数时候用 了占位符 “？”很好的解决了以上Statement的问题。我所体会到得的就是这些。 
     
     PreparedStatement是在执行前先输入sql语句，Statement正好相反，是在执行的时候传入sql语句的。
     这样的区别在于，PreparedStatement可以在传入sql后，执行语句前，给参数赋值，避免了因普通的拼接sql字符串语句所带来的安全问题，而且准备sql和执行sql是在两个语句里面完成的，也提高了语句执行的效率。
@@ -457,6 +458,7 @@
 ### 47.简单说一下对mvc框架的理解
 ### 48.struts2的执行流程或者struts2的原理
 ### 49.Struts2的拦截器是什么
+    http://www.blogjava.net/max/archive/2006/12/06/85925.html
 ### 50.Spring MVC的执行流程
 ### 51.SpringMVC和Struts2的不同
 ### 52.简单介绍一下Spring或者Spring的两大核心
