@@ -469,6 +469,7 @@
     
 
 ### 53.AOP是什么？都用它做什么？
+    https://zhuanlan.zhihu.com/p/28097563
 ### 54.Spring事务的传播特性和隔离级别
 ### 55.ORM是什么？ORM框架是什么？
     对象关系映射（Object Relational Mapping，简称ORM）模式是一种为了解决面向对象与关系数据库存在的互不匹配的现象的技术。
