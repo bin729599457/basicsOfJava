@@ -456,37 +456,19 @@
 
 ### 47.简单说一下对mvc框架的理解
     mvc包括model（模型层）view(视图层)controller(控制层)
-    
     首先介绍一下视图层，这个层比较简单。
-    
     视图层就是jsp或者tpl页面，视图层除了要掌握html css javascript，还要掌握标签语言，比如jsp原生的EL表达式（在jsp中嵌入Java代码），比如struts2提供的标签语言，比如spring提供的jstl标签语言，都是为了能把后台数据嵌入到网页中。
-    
-     
-    
     接下来说一下控制层
-    
     控制层是控制页面跳转的，根据网址栏中的url决定跳转到哪个页面，
-    
     这个url可以是用户直接手动在网址栏输入的，比如刚进入系统，在网址栏中输入
-    
     localhost:8080/projectname/enterRegister.action
-    
     后台的controller就会返回一个注册的网页给前端用户。
-    
     有时在网址栏中输入localhost:8080/projectname/index.jsp
-    
     也会跳转到指定的网页，但这种其实是重定向到指定网页，并不是通过controller返回指定网页。
-    
     这种手动输入url的后缀一定是.action或controller指定的pattern后缀格式。
-    
     第二种能调用controller决定页面跳转的就是网页中的表单提交和超链接，表单提交的url和超链接提交的url如果是以action结尾的（或其他controller指定的pattern格式），这种提交到后台后，就能通过控制器决定跳转到哪个网页。如果提交的url是以.html或者.jsp结尾的，那就是直接重定向到某个网页，而不需要经过控制器。
-    
-     
-    
     最后说一下模型层
-    
     模型层主要完成业务逻辑，包括从数据库中存取数据，模型层一般被controller层调用，controller会从前台接收参数，然后把这些参数作为输入传给service层（model层），service拿着这些参数从数据库中做增删改查，然后把数据库返回的结果给controller层，controller把返回的结果加载进将要跳转的目标jsp页面，并把渲染好的jsp网页展现给前端，这里不仅介绍了service层的功能，在mvc中所处的位置，输入输出参数，还简单介绍了mvc的工作原理。
-    
     之前我一直认为模型层指的是javabean，最近弄了一段时间php，发现人家也没有面向对象，但是人家也是mvc架构，遂发现model层指的是service层。
 ### 48.struts2的执行流程或者struts2的原理
 ### 49.Struts2的拦截器是什么
