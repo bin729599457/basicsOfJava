@@ -357,6 +357,200 @@
         }
     使用简单工厂模式的优势：让对象的调用者和对象创建过程分离，当对象调用者需要对象时，直接向工厂请求即可。从而避免了对象的调用者与对象的实现类以硬编码方式耦合，以提高系统的可维护性、可扩展性。工厂模式也有一个小小的缺陷：当产品修改时，工厂类也要做相应的修改。
 
+  ####代理模式(Proxy)
+    代理模式是一种应用非常广泛的设计模式，当客户端代码需要调用某个对象时，客户端实际上不关心是否准确得到该对象，它只要一个能提供该功能的对象即可，此时我们就可返回该对象的代理（Proxy）。
+    代理就是一个Java对象代表另一个Java对象来采取行动。如：
+```java
+    public class ImageProxy implements Image
+{
+    //组合一个image实例，作为被代理的对象
+    private Image image;
+    //使用抽象实体来初始化代理对象
+    public ImageProxy(Image image)
+    {
+       this.image = image;
+    }
+    /**
+     * 重写Image接口的show()方法
+     * 该方法用于控制对被代理对象的访问，
+     * 并根据需要负责创建和删除被代理对象
+     */
+    public void show()
+    {
+       //只有当真正需要调用image的show方法时才创建被代理对象
+       if (image == null)
+       {
+           image = new BigImage();
+       }
+       image.show();
+    }
+}
+```
+    调用时，先不创建：
+    Image image = new ImageProxy(null);
+    Hibernate默认启用延迟加载，当系统加载A实体时，A实体关联的B实体并未被加载出来，A实体所关联的B实体全部是代理对象——只有等到A实体真正需要访问B实体时，系统才会去数据库里抓取B实体所对应的记录。
+    借助于Java提供的Proxy和InvocationHandler，可以实现在运行时生成动态代理的功能，而动态代理对象就可以作为目标对象使用，而且增强了目标对象的功能。如：
+    Panther
+```java
+    public interface Panther
+{
+    //info方法声明
+    public void info();
+    //run方法声明
+    public void run();
+}
+```
+    GunPanther
+```java
+public class GunPanther implements Panther
+{
+    //info方法实现，仅仅打印一个字符串
+    publicvoid info()
+    {
+       System.out.println("我是一只猎豹！");
+    }
+    //run方法实现，仅仅打印一个字符串
+    publicvoid run()
+    {
+       System.out.println("我奔跑迅速");
+    }
+}
+```
+
+MyProxyFactory，创建代理对象
+
+publicclass MyProxyFactory
+
+{
+
+    //为指定target生成动态代理对象
+
+    publicstatic Object getProxy(Object target)
+
+       throws Exception
+
+    {
+
+       //创建一个MyInvokationHandler对象
+
+       MyInvokationHandler handler =
+
+           new MyInvokationHandler();
+
+       //为MyInvokationHandler设置target对象
+
+       handler.setTarget(target);
+
+       //创建、并返回一个动态代理
+
+       return Proxy.newProxyInstance(target.getClass().getClassLoader()
+
+           , target.getClass().getInterfaces(), handler);
+
+    }
+
+}
+
+MyInvokationHandler，增强代理的功能
+
+publicclass MyInvokationHandler implements InvocationHandler
+
+{
+
+    //需要被代理的对象
+
+    private Object target;
+
+    publicvoid setTarget(Object target)
+
+    {
+
+       this.target = target;
+
+    }
+
+    //执行动态代理对象的所有方法时，都会被替换成执行如下的invoke方法
+
+    public Object invoke(Object proxy, Method method, Object[] args)
+
+       throws Exception
+
+    {
+
+       TxUtil tx = new TxUtil();
+
+       //执行TxUtil对象中的beginTx。
+
+       tx.beginTx();
+
+       //以target作为主调来执行method方法
+
+       Object result = method.invoke(target , args);
+
+       //执行TxUtil对象中的endTx。
+
+       tx.endTx();
+
+       return result;
+
+    }
+
+}
+
+TxUtil
+
+publicclass TxUtil
+
+{
+
+    //第一个拦截器方法:模拟事务开始
+
+    publicvoid beginTx()
+
+    {
+
+       System.out.println("=====模拟开始事务=====");
+
+    }
+
+    //第二个拦截器方法:模拟事务结束
+
+    publicvoid endTx()
+
+    {
+
+       System.out.println("=====模拟结束事务=====");
+
+    }
+
+}
+
+测试
+
+    publicstaticvoid main(String[] args)
+
+       throws Exception
+
+    {
+
+       //创建一个原始的GunDog对象，作为target
+
+       Panther target = new GunPanther();
+
+       //以指定的target来创建动态代理
+
+       Panther panther = (Panther)MyProxyFactory.getProxy(target);
+
+       //调用代理对象的info()和run()方法
+
+       panther.info();
+
+       panther.run();
+
+    }
+
+Spring所创建的AOP代理就是这种动态代理。但是Spring
+
 ### 16.http get post请求的区别
     Get和Post是两种Http请求方式：
     1) Get:从服务器请求数据，而且请求包含在Url之中，如：
