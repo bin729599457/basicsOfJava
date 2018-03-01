@@ -205,77 +205,41 @@
 ### 15.设计模式和常用的设计模式
     单例模式(singleton)
     有些时候，允许自由创建某个类的实例没有意义，还可能造成系统性能下降。如果一个类始终只能创建一个实例，则这个类被称为单例类，这种模式就被称为单例模式。
-    
-        一般建议单例模式的方法命名为：getInstance()，这个方法的返回类型肯定是单例类的类型了。getInstance方法可以有参数，这些参数可能是创建类实例所需要的参数，当然，大多数情况下是不需要的
-    
+        一般建议单例模式的方法命名为：getInstance()，这个方法的返回类型肯定是单例类的类型了。getInstance方法可以有参数，这些参数可能是创建类实例所需要的参数，
+        当然，大多数情况下是不需要的
+```java
     publicclass Singleton {
-    
-       
-    
         publicstaticvoid main(String[] args)
-    
         {
-    
            //创建Singleton对象不能通过构造器，只能通过getInstance方法
-    
            Singleton s1 = Singleton.getInstance();
-    
            Singleton s2 = Singleton.getInstance();
-    
            //将输出true
-    
            System.out.println(s1 == s2);
-    
         }
-    
-       
-    
         //使用一个变量来缓存曾经创建的实例
-    
         privatestatic Singleton instance;
-    
         //将构造器使用private修饰，隐藏该构造器
-    
         private Singleton(){
-    
            System.out.println("Singleton被构造！");
-    
         }
-    
-       
-    
         //提供一个静态方法，用于返回Singleton实例
-    
         //该方法可以加入自定义的控制，保证只产生一个Singleton对象
-    
         publicstatic Singleton getInstance()
-    
         {
-    
            //如果instance为null，表明还不曾创建Singleton对象
-    
            //如果instance不为null，则表明已经创建了Singleton对象，将不会执行该方法
-    
            if (instance == null)
-    
            {
-    
                //创建一个Singleton对象，并将其缓存起来
-    
                instance = new Singleton();
-    
            }
-    
            returninstance;
-    
         }
-    
     }
-    
+ ```
     单例模式主要有如下两个优势：
-    
     1)      减少创建Java实例所带来的系统开销
-    
     2)      便于系统跟踪单个Java实例的生命周期、实例状态等。
 
 ### 16.http get post请求的区别
