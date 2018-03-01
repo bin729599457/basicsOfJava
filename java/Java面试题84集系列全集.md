@@ -249,115 +249,59 @@
     A实例调用B实例的方法，称为A依赖于B。如果使用new关键字来创建一个B实例（硬编码耦合），然后调用B实例的方法。
     一旦系统需要重构：需要使用C类来代替B类时，程序不得不改写A类代码。而用工厂模式则不需要关心B对象的实现、创建过程。
     Output，接口
-    
-    publicinterface Output
-    
+    public interface Output
     {
-    
         //接口里定义的属性只能是常量
-    
         intMAX_CACHE_LINE = 50;
-    
         //接口里定义的只能是public的抽象实例方法
-    
         void out();
-    
         void getData(String msg);
-    
     }
-    
     Printer，Output的一个实现
-    
     //让Printer类实现Output
-    
-    publicclass Printer implements Output
-    
+    public class Printer implements Output
     {
-    
         private String[] printData = new String[MAX_CACHE_LINE];
-    
         //用以记录当前需打印的作业数
-    
         privateintdataNum = 0;
-    
-        publicvoid out()
-    
+        public void out()
         {
-    
            //只要还有作业，继续打印
-    
            while(dataNum > 0)
-    
            {
-    
                System.out.println("打印机打印：" + printData[0]);
-    
                //把作业队列整体前移一位，并将剩下的作业数减1
-    
                System.arraycopy(printData , 1, printData, 0, --dataNum);
-    
            }
-    
         }
-    
-        publicvoid getData(String msg)
-    
+        public void getData(String msg)
         {
-    
            if (dataNum >= MAX_CACHE_LINE)
-    
            {
-    
                System.out.println("输出队列已满，添加失败");
-    
-           }
-    
-           else
-    
+           }else
            {
-    
                //把打印数据添加到队列里，已保存数据的数量加1。
-    
                printData[dataNum++] = msg;
-    
            }
-    
         }
-    
     }
-    
     BetterPrinter，Output的一个实现
-    
-    publicclass BetterPrinter implements Output
-    
+    public class BetterPrinter implements Output
     {
-    
         private String[] printData = new String[MAX_CACHE_LINE * 2];
-    
         //用以记录当前需打印的作业数
-    
-        privateintdataNum = 0;
-    
-        publicvoid out()
-    
+        private int dataNum = 0;
+        public void out()
         {
-    
            //只要还有作业，继续打印
-    
            while(dataNum > 0)
-    
            {
-    
                System.out.println("高速打印机正在打印：" + printData[0]);
-    
                //把作业队列整体前移一位，并将剩下的作业数减1
-    
                System.arraycopy(printData , 1, printData, 0, --dataNum);
-    
            }
-    
         }
-    
         public void getData(String msg)
         {
            if (dataNum >= MAX_CACHE_LINE * 2)
