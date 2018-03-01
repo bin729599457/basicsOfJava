@@ -203,7 +203,7 @@
 ### 14.线程并发库和线程池的作用
 
 ### 15.设计模式和常用的设计模式
-    单例模式(singleton)
+  ####单例模式(singleton)
     有些时候，允许自由创建某个类的实例没有意义，还可能造成系统性能下降。如果一个类始终只能创建一个实例，则这个类被称为单例类，这种模式就被称为单例模式。
         一般建议单例模式的方法命名为：getInstance()，这个方法的返回类型肯定是单例类的类型了。getInstance方法可以有参数，这些参数可能是创建类实例所需要的参数，
         当然，大多数情况下是不需要的
@@ -238,9 +238,180 @@
         }
     }
  ```
+ 
     单例模式主要有如下两个优势：
     1)      减少创建Java实例所带来的系统开销
     2)      便于系统跟踪单个Java实例的生命周期、实例状态等。
+    
+    
+   ####简单工厂(StaticFactory Method)
+    简单工厂模式是由一个工厂对象决定创建出哪一种产品类的实例。简单工厂模式是工厂模式家族中最简单实用的模式，可以理解为是不同工厂模式的一个特殊实现。
+    A实例调用B实例的方法，称为A依赖于B。如果使用new关键字来创建一个B实例（硬编码耦合），然后调用B实例的方法。
+    一旦系统需要重构：需要使用C类来代替B类时，程序不得不改写A类代码。而用工厂模式则不需要关心B对象的实现、创建过程。
+    Output，接口
+    
+    publicinterface Output
+    
+    {
+    
+        //接口里定义的属性只能是常量
+    
+        intMAX_CACHE_LINE = 50;
+    
+        //接口里定义的只能是public的抽象实例方法
+    
+        void out();
+    
+        void getData(String msg);
+    
+    }
+    
+    Printer，Output的一个实现
+    
+    //让Printer类实现Output
+    
+    publicclass Printer implements Output
+    
+    {
+    
+        private String[] printData = new String[MAX_CACHE_LINE];
+    
+        //用以记录当前需打印的作业数
+    
+        privateintdataNum = 0;
+    
+        publicvoid out()
+    
+        {
+    
+           //只要还有作业，继续打印
+    
+           while(dataNum > 0)
+    
+           {
+    
+               System.out.println("打印机打印：" + printData[0]);
+    
+               //把作业队列整体前移一位，并将剩下的作业数减1
+    
+               System.arraycopy(printData , 1, printData, 0, --dataNum);
+    
+           }
+    
+        }
+    
+        publicvoid getData(String msg)
+    
+        {
+    
+           if (dataNum >= MAX_CACHE_LINE)
+    
+           {
+    
+               System.out.println("输出队列已满，添加失败");
+    
+           }
+    
+           else
+    
+           {
+    
+               //把打印数据添加到队列里，已保存数据的数量加1。
+    
+               printData[dataNum++] = msg;
+    
+           }
+    
+        }
+    
+    }
+    
+    BetterPrinter，Output的一个实现
+    
+    publicclass BetterPrinter implements Output
+    
+    {
+    
+        private String[] printData = new String[MAX_CACHE_LINE * 2];
+    
+        //用以记录当前需打印的作业数
+    
+        privateintdataNum = 0;
+    
+        publicvoid out()
+    
+        {
+    
+           //只要还有作业，继续打印
+    
+           while(dataNum > 0)
+    
+           {
+    
+               System.out.println("高速打印机正在打印：" + printData[0]);
+    
+               //把作业队列整体前移一位，并将剩下的作业数减1
+    
+               System.arraycopy(printData , 1, printData, 0, --dataNum);
+    
+           }
+    
+        }
+    
+        public void getData(String msg)
+        {
+           if (dataNum >= MAX_CACHE_LINE * 2)
+           {
+               System.out.println("输出队列已满，添加失败");
+           }
+           else
+           {
+               //把打印数据添加到队列里，已保存数据的数量加1。
+               printData[dataNum++] = msg;
+           }
+        }
+    }
+    OutputFactory，简单工厂类
+        public Output getPrinterOutput(String type) {
+           if (type.equalsIgnoreCase("better")) {
+               returnnew BetterPrinter();
+           } else {
+               returnnew Printer();
+           }
+        }
+    Computer
+    public class Computer
+    {
+        private Output out;
+        public Computer(Output out)
+        {
+           this.out = out;
+        }
+        //定义一个模拟获取字符串输入的方法
+        public void keyIn(String msg)
+        {
+           out.getData(msg);
+        }
+        //定义一个模拟打印的方法
+        publicvoid print()
+        {
+           out.out();
+        }
+        publicstaticvoid main(String[] args)
+        {
+           //创建OutputFactory
+           OutputFactory of = new OutputFactory();
+           //将Output对象传入，创建Computer对象
+           Computer c = new Computer(of.getPrinterOutput("normal"));
+           c.keyIn("建筑永恒之道");
+           c.keyIn("建筑模式语言");
+           c.print();
+           c = new Computer(of.getPrinterOutput("better"));
+           c.keyIn("建筑永恒之道");
+           c.keyIn("建筑模式语言");
+           c.print();
+        }
+    使用简单工厂模式的优势：让对象的调用者和对象创建过程分离，当对象调用者需要对象时，直接向工厂请求即可。从而避免了对象的调用者与对象的实现类以硬编码方式耦合，以提高系统的可维护性、可扩展性。工厂模式也有一个小小的缺陷：当产品修改时，工厂类也要做相应的修改。
 
 ### 16.http get post请求的区别
     Get和Post是两种Http请求方式：
