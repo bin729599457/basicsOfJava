@@ -475,31 +475,20 @@ public class TxUtil
     }
 }
 ```
-
 测试
-
-    publicstaticvoid main(String[] args)
-
+```java
+    public static void main(String[] args)
        throws Exception
-
     {
-
        //创建一个原始的GunDog对象，作为target
-
        Panther target = new GunPanther();
-
        //以指定的target来创建动态代理
-
        Panther panther = (Panther)MyProxyFactory.getProxy(target);
-
        //调用代理对象的info()和run()方法
-
        panther.info();
-
        panther.run();
-
     }
-
+```
     Spring所创建的AOP代理就是这种动态代理。但是SpringAOP更灵活。
 
 ### 16.http get post请求的区别
