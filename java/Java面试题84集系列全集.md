@@ -59,11 +59,11 @@
 ```java
     private final char value[];
 ```
+
 　　StringBuilder与StringBuffer都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串，如下就是，可知这两种对象都是可变的。
 ```java
     char[] value;
 ```
-
 - 2.是否多线程安全
 　　String中的对象是不可变的，也就可以理解为常量，显然线程安全。
 　　AbstractStringBuilder是StringBuilder与StringBuffer的公共父类，定义了一些字符串的基本操作，如expandCapacity、append、insert、indexOf等公共方法。
@@ -75,7 +75,6 @@
        super.reverse();
         return this;
     }
-
     public int indexOf(String str) {
         return indexOf(str, 0);        
 //存在 public synchronized int indexOf(String str, int fromIndex) 方法
@@ -208,8 +207,8 @@
         一般建议单例模式的方法命名为：getInstance()，这个方法的返回类型肯定是单例类的类型了。getInstance方法可以有参数，这些参数可能是创建类实例所需要的参数，
         当然，大多数情况下是不需要的
 ```java
-    publicclass Singleton {
-        publicstaticvoid main(String[] args)
+    public class Singleton {
+        public staticvoid main(String[] args)
         {
            //创建Singleton对象不能通过构造器，只能通过getInstance方法
            Singleton s1 = Singleton.getInstance();
@@ -218,14 +217,14 @@
            System.out.println(s1 == s2);
         }
         //使用一个变量来缓存曾经创建的实例
-        privatestatic Singleton instance;
+        private static Singleton instance;
         //将构造器使用private修饰，隐藏该构造器
         private Singleton(){
            System.out.println("Singleton被构造！");
         }
         //提供一个静态方法，用于返回Singleton实例
         //该方法可以加入自定义的控制，保证只产生一个Singleton对象
-        publicstatic Singleton getInstance()
+        public static Singleton getInstance()
         {
            //如果instance为null，表明还不曾创建Singleton对象
            //如果instance不为null，则表明已经创建了Singleton对象，将不会执行该方法
@@ -234,7 +233,7 @@
                //创建一个Singleton对象，并将其缓存起来
                instance = new Singleton();
            }
-           returninstance;
+           return instance;
         }
     }
  ```
@@ -416,114 +415,66 @@ public class GunPanther implements Panther
     }
 }
 ```
-
-MyProxyFactory，创建代理对象
-
-publicclass MyProxyFactory
-
+    MyProxyFactory，创建代理对象
+```java
+public class MyProxyFactory
 {
-
     //为指定target生成动态代理对象
-
     publicstatic Object getProxy(Object target)
-
        throws Exception
-
     {
-
        //创建一个MyInvokationHandler对象
-
        MyInvokationHandler handler =
-
            new MyInvokationHandler();
-
        //为MyInvokationHandler设置target对象
-
        handler.setTarget(target);
-
        //创建、并返回一个动态代理
-
        return Proxy.newProxyInstance(target.getClass().getClassLoader()
-
            , target.getClass().getInterfaces(), handler);
-
     }
-
 }
-
-MyInvokationHandler，增强代理的功能
-
-publicclass MyInvokationHandler implements InvocationHandler
-
+```
+    MyInvokationHandler，增强代理的功能
+```java
+public class MyInvokationHandler implements InvocationHandler
 {
-
     //需要被代理的对象
-
     private Object target;
-
     publicvoid setTarget(Object target)
-
     {
-
        this.target = target;
-
     }
-
     //执行动态代理对象的所有方法时，都会被替换成执行如下的invoke方法
-
     public Object invoke(Object proxy, Method method, Object[] args)
-
        throws Exception
-
     {
-
        TxUtil tx = new TxUtil();
-
        //执行TxUtil对象中的beginTx。
-
        tx.beginTx();
-
        //以target作为主调来执行method方法
-
        Object result = method.invoke(target , args);
-
        //执行TxUtil对象中的endTx。
-
        tx.endTx();
-
        return result;
-
     }
-
 }
-
-TxUtil
-
-publicclass TxUtil
-
+```
+    TxUtil
+```java
+public class TxUtil
 {
-
     //第一个拦截器方法:模拟事务开始
-
-    publicvoid beginTx()
-
+    public void beginTx()
     {
-
        System.out.println("=====模拟开始事务=====");
-
     }
-
     //第二个拦截器方法:模拟事务结束
-
-    publicvoid endTx()
-
+    public void endTx()
     {
-
        System.out.println("=====模拟结束事务=====");
-
     }
-
 }
+```
 
 测试
 
@@ -549,7 +500,7 @@ publicclass TxUtil
 
     }
 
-Spring所创建的AOP代理就是这种动态代理。但是Spring
+    Spring所创建的AOP代理就是这种动态代理。但是SpringAOP更灵活。
 
 ### 16.http get post请求的区别
     Get和Post是两种Http请求方式：
