@@ -1,5 +1,56 @@
 ## 数据库
+    内连接。（典型的连接运算，使用像   =   或   <>   之类的比较运算符）。
+    包括相等连接和自然连接。     
+    内连接使用比较运算符根据每个表共有的列的值匹配两个表中的行。
+    例如，检索   students   和   courses   表中学生标识号相同的所有行。   
+      外连接。外连接可以是左向外连接、右向外连接或完整外部连接。     
+      在FROM子句中指定外连接时，可以由下列几组关键字中的一组指定：   
+      LEFT   JOIN   或   LEFT   OUTER   JOIN。     
+      左向外连接的结果集包括LEFT  OUTER子句中指定的左表的所有行，而不仅仅是连接列所匹配的行。如果左表的某行在右表中没有匹配行，则在相关联的结果集行中右表的所有选择列表列均为空值。    
+      RIGHT  JOIN  或  RIGHT   OUTER   JOIN。     
+      右向外连接是左向外连接的反向连接。将返回右表的所有行。如果右表的某行在左表中没有匹配行，则将为左表返回空值。   
+      FULL   JOIN   或   FULL   OUTER   JOIN。     
+      完整外部连接返回左表和右表中的所有行。当某行在另一个表中没有匹配行时，则另一个表的选择列表列包含空值。如果表之间有匹配行，则整个结果集行包含基表的数据值。   
+      交叉连接。交叉连接返回左表中的所有行，左表中的每一行与右表中的所有行组合。交叉连接也称作笛卡尔积。
+例子：   
+  a表       id   name     b表     id     job   parent_id   
+              1   张3                   1     23     1   
+              2   李四                  2     34     2   
+              3   王武                  3     34     4   
+    
+  a.id同parent_id   存在关系   
+    
+  内连接   
+  select   a.*,b.*   from   a   inner   join   b     on   a.id=b.parent_id   
+    
+  结果是     
+  1   张3                   1     23     1   
+  2   李四                  2     34     2   
+    
+  左连接   
+  select   a.*,b.*   from   a   left   join   b     on   a.id=b.parent_id   
+    
+  结果是     
+  1   张3                    1     23     1   
+  2   李四                  2     34     2   
+  3   王武                  null   
 
+  右连接   
+  select   a.*,b.*   from   a   right   join   b     on   a.id=b.parent_id   
+    
+  结果是     
+  1   张3                   1     23     1   
+  2   李四                 2     34     2   
+  null                       3     34     4   
+    
+  完全连接   
+  select   a.*,b.*   from   a   full   join   b     on   a.id=b.parent_id   
+
+  结果是     
+  1   张3                   1     23     1   
+  2   李四                 2     34     2   
+  null                 3     34     4   
+  3   王武                 null
 
 ## join操作
 
