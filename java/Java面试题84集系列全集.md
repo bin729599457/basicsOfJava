@@ -35,7 +35,20 @@
     char       2字节       2*8
     boolean    1字节       1*8    false、true
 ###String的基本用法
-        
+    1、字符数组与字符串
+    
+       一个字符串可以变为一个字符数组，同样，也可以把一个字符数组，变为一个字符串。
+       在String类中提供了以下的操作方法：
+              ·将字符串变为字符数组： 1.toCharArray() 返回  char[]  
+                                        例：*String str = "你好";
+                                            char  c[] = str.toCharArray();*
+    
+              ·字符数组变为字符串：  1.（char[] value) 返回  String 
+                                          例： String Stri = new String(c);
+                                           
+                                  2.（char[] value,int begin,int count)  返回 String  
+                                         例： String Stri = new String(c,0,2);
+    
 
 ### 05.java面向对象的特征
     面向对象的三个基本特征是：封装、继承、多态。
