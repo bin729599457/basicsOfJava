@@ -48,7 +48,53 @@
                                            
                                   2.（char[] value,int begin,int count)  返回 String  
                                          例： String Stri = new String(c,0,2);
-    
+    2、从字符串中取出指定位置的字符
+        charAt()  返回 int
+    3、字符串与byte数组的转换
+    byte数组（字节数组），在一般的IO操作中会经常使用到。
+    在String类中提供了以下的方法可以进行字符串与字节数组的转换：
+    字符串变为字节数组：public byte[] getBytes()
+    将一个字节数组变为字符串：
+        |-将全部字节数组变为String：public String（byte[] bytes)
+        |-将部分字节数组变为String：public String（byte[]bytes,int offset,int lenth)
+    4、取得一个字符串的长度
+           要想取得字符串中的长度：public int length()
+    5、查找指定的字符串存在的位置
+       在实际操作中，经常会使用到判断一个字符串中是否存在某些内容，此时就可以使用以下的方法：
+          ·从头开始查找：public int indexOf(String str)
+          ·从指定位置开始查找：public int indexOf(String str,int fromIndex)
+        查找的时候，方法的返回值是一个int类型的数据，此数据表示的是一个字符串的具体位置，如果没有查找到此字符串，则返回“-1”。
+    6、去掉空格
+        如果一些信息是由用户输入的话，则就可能出现多余的空格，在这种操作中就可以使用trim()去掉字符串的左右空格，
+        但是字符串中间的空格是不可能去掉的。
+    7、字符截取
+        从一个指定的字符串中取出里面的部分内容，使用的方法：
+        ·从指定位置开始一直截取到结束位置：public Stringsubstring(int beginIndex)
+        ·截取指定范围的字符串：public Stringsubstring(int beginIndex,int endIndex)
+    8、拆分字符串
+       如果现在需要按指定的字符串去拆分一个字符串的话，则使用：public  String[] split(String regex)
+        例：
+            String a  = "hello";
+            String s[] = a.split("l");
+            for(int i = 0; i <s.length; i ++  ){
+                System.out.println(s[i]);
+            }
+         -----he 
+         -----o
+    9、大小写转换
+       此功能在一般的开发语言都会存在，讲一个大写的字符串全部字母变为小写，或者将一个小写的字符串中的全部字母变为大写。
+          ·小写变大写：public String toUpperCase()
+          ·大写变小写：public String toLowerCase()
+    10、判断是否以指定的字符串开头或结尾
+       在String中可以使用以下的两个方法完成：
+          ·判断是否以指定的字符串开头：public BooleanstartsWith(String prefix)
+          ·判断是否以指定的字符串结尾：public Boolean endsWith(Stringsuffix)    
+    11、不区分大小写的比较
+       在String类中equals()方法是可以用来进行字符串比较的，但是此种比较方法的只能针对大小写完全一样的字符串进行比较，如果现在要是想进行不区分大小写的比较，则可以使用以下的方法：
+          ·public Boolean equalsIgonoreCase（String anotherString）
+    12、字符串替换功能
+       在String类中提供了以下方法用于字符串的替换操作：
+          ·public String replaceAll(Stringregex,String replacement)
 
 ### 05.java面向对象的特征
     面向对象的三个基本特征是：封装、继承、多态。
