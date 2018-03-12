@@ -33,5 +33,16 @@ class BinaryTreeErgodic {
                 queue.offer(current.right);
         }
     }
+    /**
+     * 先序遍历
+     */
+    public static void preOrderTraverse(TreeNode node) {
+        if (node == null)
+            return;
+        System.out.print(node.value + " ");
+        preOrderTraverse(node.left);
+        preOrderTraverse(node.right);
+    }
+
 }
 
