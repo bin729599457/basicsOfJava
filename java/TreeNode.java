@@ -44,5 +44,16 @@ class BinaryTreeErgodic {
         preOrderTraverse(node.right);
     }
 
+    /**
+     * 中序遍历
+     */
+    public static void inOrderTraverse(TreeNode node) {
+        if (node == null)
+            return;
+        inOrderTraverse(node.left);
+        System.out.print(node.value + " ");
+        inOrderTraverse(node.right);
+    }
+
 }
 
