@@ -66,5 +66,23 @@ class BinaryTreeErgodic {
         System.out.print(node.value + " ");
     }
 
+
+
+
+    /**
+     在二叉查找树中：
+     (01) 若任意节点的左子树不空，则左子树上所有结点的值均小于它的根结点的值；
+     (02) 任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值；
+     (03) 任意节点的左、右子树也分别为二叉查找树。
+     (04) 没有键值相等的节点（no duplicate nodes）。
+     */
+
+    class Node {
+        int data;
+        Node left;
+        Node right;
+    }
+
+
 }
 
