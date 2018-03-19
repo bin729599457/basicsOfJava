@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Test {
@@ -12,20 +11,14 @@ public class Test {
 
         List<String> strings=readTxtFileIntoStringArrList(FILE_PATH);
         Test t=new Test();
-        t.handleArray(FILE_PATH);
-        for(String str:strings){
-            System.out.println(str);
-        }
+        t.handleArray(FILE_PATH,2);
     }
 
-    public void homeWorkAnswer(String filePath){
-        handleArray(filePath);
-    }
 
-    public void handleArray(String filePath){
+    public void handleArray(String filePath,int index){
 
         List<String> list=readTxtFileIntoStringArrList(filePath);
-        List<HashMap> planes=new ArrayList<>();
+        List<HashMap<String,Object>> planes=new ArrayList<>();
         for(String str:list){
             String [] temp=str.split("\\s+");
             HashMap plane=new HashMap();
@@ -37,6 +30,9 @@ public class Test {
                 plane.put("offsetX","");
                 plane.put("offsetY","");
                 plane.put("offsetZ","");
+                plane.put("offsetX","0");
+                plane.put("offsetY","0");
+                plane.put("offsetZ","0");
                 plane.put("isFalse",true);
                 plane.put("curX","NA");
                 plane.put("curY","NA");
@@ -57,18 +53,52 @@ public class Test {
                 planes.add(plane);
         }
 
+        List<HashMap<String, Object>> planeMap=judgeMethod(planes);
+
+        if(index>planes.size()){
+            System.out.println("Cannot find 100");
+
+        }else {
+            Boolean isFalse= (Boolean) planes.get(index).get("isFalse");
+            if(isFalse){
+                System.out.println("Error:"+index);
+            }else {
+                System.out.println(planeMap.get(index+1).get("planeId").toString()+index+planeMap.get(index+1).get("curX")+planeMap.get(index+1).get("curY")+planeMap.get(index+1).get("curZ"));
+            }
+        }
+
     }
 
-    public void judgeMethod(List<String> list){
+    public List<HashMap<String, Object>> judgeMethod(List<HashMap<String,Object>> planes){
 
-        String plane="";
-        for(int i=0;i<list.size();i++){
+        for(int i=0;i<planes.size();i++){
+            //第一行没有offset
             if(i==0){
-                //消息由字母和数字组成
-                String pattern="^[A-Za-z0-9]+$";
+                planes.get(i).put("curX",planes.get(i).get("X"));
+                planes.get(i).put("curY",planes.get(i).get("Y"));
+                planes.get(i).put("curZ",planes.get(i).get("Z"));
+                planes.get(i).put("isFalse",false);
+            }else {
+                Boolean isFalse= (Boolean) planes.get(i-1).get("isFalse");
+                if(isFalse){
+                    break;
+                }
+                //X Y Z与前一条坐标相等
+                if(planes.get(i-1).get("curX").toString().equals(planes.get(i).get("X"))&&
+                        planes.get(i-1).get("curY").toString().equals(planes.get(i).get("Y"))&&
+                        planes.get(i-1).get("curZ").toString().equals(planes.get(i).get("Z"))){
+                    int numX=Integer.parseInt(planes.get(i).get("X").toString())+Integer.parseInt(planes.get(i).get("offsetX").toString());
+                    int numY=Integer.parseInt(planes.get(i).get("Y").toString())+Integer.parseInt(planes.get(i).get("offsetY").toString());
+                    int numZ=Integer.parseInt(planes.get(i).get("Z").toString())+Integer.parseInt(planes.get(i).get("offsetZ").toString());
+                    planes.get(i).put("curX",numX+"");
+                    planes.get(i).put("curY",numY+"");
+                    planes.get(i).put("curZ",numZ+"");
+                    planes.get(i).put("isFalse",false);
+                }
 
             }
         }
+        return planes;
     }
 
     public static List<String> readTxtFileIntoStringArrList(String filePath){
