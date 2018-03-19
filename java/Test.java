@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -24,9 +25,36 @@ public class Test {
     public void handleArray(String filePath){
 
         List<String> list=readTxtFileIntoStringArrList(filePath);
+        List<HashMap> planes=new ArrayList<>();
         for(String str:list){
             String [] temp=str.split("\\s+");
-
+            HashMap plane=new HashMap();
+            if(temp.length<=4){
+                plane.put("planeId",temp[0]);
+                plane.put("X",temp[1]);
+                plane.put("Y",temp[2]);
+                plane.put("Z",temp[3]);
+                plane.put("offsetX","");
+                plane.put("offsetY","");
+                plane.put("offsetZ","");
+                plane.put("isFalse",true);
+                plane.put("curX","NA");
+                plane.put("curY","NA");
+                plane.put("curZ","NA");
+            }else {
+                plane.put("planeId",temp[0]);
+                plane.put("X",temp[1]);
+                plane.put("Y",temp[2]);
+                plane.put("Z",temp[3]);
+                plane.put("offsetX",temp[4]);
+                plane.put("offsetY",temp[5]);
+                plane.put("offsetZ",temp[6]);
+                plane.put("isFalse",true);
+                plane.put("curX","NA");
+                plane.put("curY","NA");
+                plane.put("curZ","NA");
+            }
+                planes.add(plane);
         }
 
     }
