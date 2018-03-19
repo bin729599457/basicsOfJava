@@ -1,5 +1,5 @@
 
-public class SearchTest {
+public class 搜索算法总结 {
 
     public static void main(String[] args) {
 
