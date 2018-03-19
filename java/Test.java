@@ -5,15 +5,31 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Test {
+    public static final String FILE_PATH="/Users/binbin/test.txt";
 
     public static void main(String[] args) {
-        List<String> strings=readTxtFileIntoStringArrList("/Users/binbin/test.txt");
 
+        List<String> strings=readTxtFileIntoStringArrList(FILE_PATH);
+        Test t=new Test();
+        t.handleArray(FILE_PATH);
         for(String str:strings){
             System.out.println(str);
         }
     }
 
+    public void homeWorkAnswer(String filePath){
+        handleArray(filePath);
+    }
+
+    public void handleArray(String filePath){
+
+        List<String> list=readTxtFileIntoStringArrList(filePath);
+        for(String str:list){
+            String [] temp=str.split("\\s+");
+
+        }
+
+    }
 
     public void judgeMethod(List<String> list){
 
@@ -32,7 +48,7 @@ public class Test {
 
         List<String> list=new ArrayList<>();
         try {
-        String encoding="GBK";
+        String encoding="UTF-8";
         File file=new File(filePath);
 
         if(file.isFile()&&file.exists()){
@@ -45,8 +61,7 @@ public class Test {
                 String pattern = "plane.+?";
                 boolean isMatch = Pattern.matches(pattern, lineText);
                 if(isMatch){
-                    lineText.replace("}","");
-                    list.add(lineText);
+                    list.add(lineText.substring(0,lineText.length()-1));
                 }
             }
             bufferedReader.close();
@@ -63,5 +78,10 @@ public class Test {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public static boolean isNumeric(String str){
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches();
     }
 }
