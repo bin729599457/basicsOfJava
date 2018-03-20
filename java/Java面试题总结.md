@@ -19,7 +19,6 @@
     即使你将Java程序打包成可执行文件（例如 .exe），仍然需要JVM的支持。注意：跨平台的是Java程序，不是JVM。
     JVM是用C/C++开发的，是编译后的机器码，不能跨平台，不同平台下需要安装不同版本的JVM。
 
-
 ### Java类方法和实例方法的区别
     类体中的方法分为类方法和实例方法。
     
@@ -57,8 +56,6 @@ class B{
         }
     }
 ```
-
-
     
 ### 03.抽象类和接口的区别
     |参数|抽象类|接口|
@@ -85,8 +82,6 @@ class B{
     char       2字节       2*8
     boolean    1字节       1*8    false、true
 ### String的基本用法
-    1、字符数组与字符串
-    一个字符串可以变为一个字符数组，同样，也可以把一个字符数组，变为一个字符串。
     在String类中提供了以下的操作方法：
     ·将字符串变为字符数组： 1.toCharArray() 返回  char[]  
         例：*String str = "你好";
@@ -96,7 +91,7 @@ class B{
               2.（char[] value,int begin,int count)  返回 String  
              例： String Stri = new String(c,0,2);
     2、从字符串中取出指定位置的字符
-        charAt()  返回 int
+        charAt()  返回 指定位置char;
     3、字符串与byte数组的转换
     byte数组（字节数组），在一般的IO操作中会经常使用到。
     在String类中提供了以下的方法可以进行字符串与字节数组的转换：
@@ -111,15 +106,12 @@ class B{
           ·从头开始查找：public int indexOf(String str)
           ·从指定位置开始查找：public int indexOf(String str,int fromIndex)
         查找的时候，方法的返回值是一个int类型的数据，此数据表示的是一个字符串的具体位置，如果没有查找到此字符串，则返回“-1”。
-    6、去掉空格
-        如果一些信息是由用户输入的话，则就可能出现多余的空格，在这种操作中就可以使用trim()去掉字符串的左右空格，
-        但是字符串中间的空格是不可能去掉的。
+    6、去掉空格trim(),但是字符串中间的空格是不可能去掉的。
     7、字符截取
-        从一个指定的字符串中取出里面的部分内容，使用的方法：
         ·从指定位置开始一直截取到结束位置：public Stringsubstring(int beginIndex)
         ·截取指定范围的字符串：public Stringsubstring(int beginIndex,int endIndex)
     8、拆分字符串
-       如果现在需要按指定的字符串去拆分一个字符串的话，则使用：public  String[] split(String regex)
+      public  String[] split(String regex)
         例：
             String a  = "hello";
             String s[] = a.split("l");
@@ -222,6 +214,13 @@ class B{
     A | B = 0011 1101
     A ^ B = 0011 0001
     ~A= 1100 0011
+    
+### Java移位符
+    java中有三种移位运算符
+    << :左移运算符,x << 1,相当于x乘以2(不溢出的情况下),低位补0
+    >> :带符号右移,x >> 1,相当于x除以2,正数高位补0,负数高位补1
+    >>> :无符号右移,忽略符号位,空位都以0补齐
+
 ### char 型变量中能不能存贮一个中文汉字?为什么?
     char 型变量是用来存储 Unicode 编码的字符的， unicode 编码字符集中包含了汉字，所以，char 型变量中当然可以存储汉字。
     不过，如果某个特殊的汉字没有被包含在 unicode 编码字符集中，那么，这个 char 型变量中就不能存储这个特殊汉字。 
