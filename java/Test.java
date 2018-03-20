@@ -11,7 +11,7 @@ public class Test {
 
         List<String> strings=readTxtFileIntoStringArrList(FILE_PATH);
         Test t=new Test();
-        t.handleArray(FILE_PATH,2);
+        t.handleArray(FILE_PATH,100);
     }
 
 
