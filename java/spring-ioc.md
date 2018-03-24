@@ -5,7 +5,11 @@
     IoC 控制反转，指将对象的创建权，反转到Spring容器 ， DI 依赖注入，指Spring创建对象的过程中，将对象依赖属性通过配置进行注入
     
 ### @Autowired和@Resource的区别
-        
+    @Autowired与@Resource都可以用来装配bean. 都可以写在字段上,或写在setter方法上。
+
+    他们的主要区别就是@Autowired是默认按照类型装配的 @Resource默认是按照名称装配的.
+    byName 通过参数名 自动装配，如果一个bean的name 和另外一个bean的 property 相同，就自动装配。
+    byType 通过参数的数据类型自动自动装配，如果一个bean的数据类型和另外一个bean的property属性的数据类型兼容，就自动装配
 
 ### 53.AOP是什么？都用它做什么？
     https://zhuanlan.zhihu.com/p/28097563
