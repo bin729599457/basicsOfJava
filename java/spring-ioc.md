@@ -4,6 +4,8 @@
     DI：Dependency Injection 依赖注入，在Spring框架负责创建Bean对象时，动态的将依赖对象注入到Bean组件
     IoC 控制反转，指将对象的创建权，反转到Spring容器 ， DI 依赖注入，指Spring创建对象的过程中，将对象依赖属性通过配置进行注入
     
+### @Autowired和@Resource的区别
+        
 
 ### 53.AOP是什么？都用它做什么？
     https://zhuanlan.zhihu.com/p/28097563
