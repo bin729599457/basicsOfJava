@@ -157,11 +157,13 @@
     （3）创建表的时候指定索引，例如CREATE TABLE tablename ( [...], UNIQUE 索引的名字 (列的列 
     表) ); 
     3、主键（唯一性索引） 
-    主键是一种唯一性索引，但它必须指定为“PRIMARY KEY”。如果你曾经用过AUTO_INCREMENT类型的列，你可能已经熟悉主键之类的概念了。主键一般在创建表的时候指定，例如“CREATE TABLE tablename ( [...], PRIMARY KEY (列的列表) ); ”。但是，我们也可以通过修改表的方式加入主键，例如“ALTER TABLE tablename ADD PRIMARY KEY (列的列表); ”。每个表只能有一个主键。 （主键相当于聚合索引，是查找最快的索引） 
+    主键是一种唯一性索引，但它必须指定为“PRIMARY KEY”。如果你曾经用过AUTO_INCREMENT类型的列，你可能已经熟悉主键之类的概念了。
+    主键一般在创建表的时候指定，例如“CREATE TABLE tablename ( [...], PRIMARY KEY (列的列表) ); ”。但是，我们也可以通过修改表的方式加入主键，例如“ALTER TABLE tablename ADD PRIMARY KEY (列的列表); ”。
+    每个表只能有一个主键。 （主键相当于聚合索引，是查找最快的索引） 
     4、单列索引和多列索引 
-    索引可以是单列索引，也可以是多列索引。 
-    （1）单列索引就是常用的一个列字段的索引，常见的索引。 
-    （2）多列索引就是含有多个列字段的索引 
+    索引可以是单列索引，也可以是多列索引。
+    （1）单列索引就是常用的一个列字段的索引,常见的索引。 
+    （2）多列索引就是含有多个列字段的索引
     alter table student add index sy(name,age，score); 
     索引sy就为多列索引，多列索引在以下几中情况下才能有效： 
     select * from student where name='jia' and age>='12' //where条件中含有索引的首列字段和 
