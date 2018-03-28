@@ -51,13 +51,136 @@
       null                 3     34     4   
       3   王武                 null
 
-## join操作
+### join操作
 
     LEFT JOIN 关键字会从左表 (Persons) 那里返回所有的行，即使在右表 (Orders) 中没有匹配的行。
     RIGHT JOIN 关键字会从右表 (Orders) 那里返回所有的行，即使在左表 (Persons) 中没有匹配的行。
     FULL JOIN 关键字会从左表 (Persons) 和右表 (Orders) 那里返回所有的行。如果 "Persons" 中的行在表 "Orders" 中没有匹配，或者如果 "Orders" 中的行在表 "Persons" 中没有匹配，这些行同样会列出。
     INNER JOIN 关键字在表中存在至少一个匹配时返回行。如果 "Persons" 中的行在 "Orders" 中没有匹配，就不会列出这些行。
-## 数据库范式
+### group by的用法
+    group by按照查询结果集中的某一列（或多列），进行分组，值相等的为一组。
+    1》单一列属性排序
+    举例1：默认排序：
+    [sql] view plain copy
+    select * from s  
+    
+    [sql] view plain copy
+    select * from s order by sno desc  
+    按照sno降序：
+    
+    
+    2》多个列属性排序
+    
+    选择多个列属性进行排序，然后排序的顺序是，从左到右，依次排序。
+    
+    如果前面列属性有些是一样的话，再按后面的列属性排序。（前提一定要满足前面的属性排序，因为在前面的优先级高）。
+    
+    举例2：
+    
+    [sql] view plain copy
+    select * from s    
+    order by sname desc, sage desc  
+    
+    
+    
+    首先按照sname降序排序，然后出现了xx一样的，在按照sage降序排序。（默认sage是升序）。
+    
+    如果最开始使用sno排序，
+    
+    [sql] view plain copy
+    select * from s   
+    order by sno desc,  sage asc  
+    
+    
+    必须先满足前面列属性的排序（sno在前优先级高）。才会去考虑后续列属性的排序。
+    
+    二、group by的用法
+    group by按照查询结果集中的某一列（或多列），进行分组，值相等的为一组。
+    
+    1》细化集函数（count，sum，avg，max，min）的作用对象：
+    
+    未对查询结果分组，集函数将作用于整个查询结果。
+    
+    对查询结果分组后，集函数将分别作用于每个组。
+    
+    例子3：
+    
+    求各个课程号及相应的选课人数：
+    
+    [sql] view plain copy
+    SELECT cno,count(sno) from sc  
+    
+    
+    
+    对整个表进行count。
+    
+    
+    [sql] view plain copy
+    SELECT cno,count(sno) from sc group by cno  
+    
+    
+    对分组的表进行count
+    
+    
+    sc表内容如下：
+    
+    
+    2》GROUP BY子句的作用对象是查询的中间结果表
+    
+    分组方法：按指定的一列或多列值分组，值相等的为一组。
+    
+    使用GROUP BY子句后，SELECT子句的列名列表中只能出现分组属性（比如：sno）和集函数（比如：count（））。
+    
+    [sql] view plain copy
+    select sno,count(cno) from sc group by sno  
+    
+    
+    
+    
+    3》多个列属性进行分组举例：
+    
+    [sql] view plain copy
+    select cno,grade,count(cno) from sc group by cno,grade  
+    
+    
+    cno为1且成绩为66的，有3个
+    
+    
+    
+    4》使用HAVING短语筛选最终输出结果
+    
+    
+    只有满足HAVING短语指定条件的组才输出。
+    
+    HAVING短语与WHERE子句的区别：作用对象不同。
+    
+    1》WHERE子句作用于基表或视图，从中选择满足条件的元组。
+    
+    2》HAVING短语作用于组，从中选择满足条件的组。
+    
+    举例：
+    
+    查询选修了3门以上课程的学生学号：
+    
+    [sql] view plain copy
+    select sno from sc group by sno having count(cno)>3  
+    
+    
+    
+    
+    举例：
+    查询选修了3门以上课程，且所有课程成绩都高于60分的学生学号及课程数
+    
+    [sql] view plain copy
+    select sno , count(cno)  
+    from sc   
+    where grade > 60    
+    group by sno having count(cno) > 3  
+    
+    
+    好的，先就总结到此吧，后
+
+### 数据库范式
 
     第一范式（无重复的列）
     第二范式（属性完全依赖于主键）
