@@ -19,6 +19,47 @@
     即使你将Java程序打包成可执行文件（例如 .exe），仍然需要JVM的支持。注意：跨平台的是Java程序，不是JVM。
     JVM是用C/C++开发的，是编译后的机器码，不能跨平台，不同平台下需要安装不同版本的JVM。
 
+### 代码块执行顺序
+    当涉及到继承时，按照如下顺序执行：
+    执行父类的静态代码块，并初始化父类静态成员变量
+    执行子类的静态代码块，并初始化子类静态成员变量
+    执行父类的构造代码块，执行父类的构造函数，并初始化父类普通成员变量
+    执行子类的构造代码块， 执行子类的构造函数，并初始化子类普通成员变量
+```java
+public class HelloA {
+        public HelloA(){//构造函数
+            System.out.println("A的构造函数");    
+        }
+        {//构造代码块
+            System.out.println("A的构造代码块");    
+        }
+        static {//静态代码块
+            System.out.println("A的静态代码块");        
+        }
+    }
+    public class HelloB extends HelloA{
+        public HelloB(){//构造函数
+            System.out.println("B的构造函数");    
+        }
+        {//构造代码块
+            System.out.println("B的构造代码块");    
+        }
+        static {//静态代码块
+            System.out.println("B的静态代码块");        
+        }
+        public static void main(String[] args) {
+            HelloB b=new HelloB();        
+        }
+    }
+```
+    运行结果：
+    A的静态代码块
+    B的静态代码块
+    A的构造代码块
+    A的构造函数
+    B的构造代码块
+    B的构造函数
+
 ### Java类方法和实例方法的区别
     类体中的方法分为类方法和实例方法。
     
