@@ -13,10 +13,18 @@ public class HumanFactory {
         return null;
     }
 
-    public Male createMale(){
+/*    public Male createMale(){
         return new Male();
     }
     public Female createFemale(){
+        return new Female();
+    }*/
+
+    public static Male createMale(){
+        return new Male();
+    }
+
+    public static Female createFemale(){
         return new Female();
     }
 }
