@@ -12,4 +12,11 @@ public class HumanFactory {
         }
         return null;
     }
+
+    public Male createMale(){
+        return new Male();
+    }
+    public Female createFemale(){
+        return new Female();
+    }
 }
