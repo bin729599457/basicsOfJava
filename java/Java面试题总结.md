@@ -1,3 +1,8 @@
+### String str = new String("abc")
+    String str2 = new String("abc"); 此时就创建一个对象，而abc 则是从字符串常量缓冲区中取出来的
+  
+### 
+
 ### 实体间的联系
     两个实体型之间的联系：
     ①一对一联系（1∶1）
